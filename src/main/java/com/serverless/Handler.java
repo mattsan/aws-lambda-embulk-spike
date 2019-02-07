@@ -9,6 +9,9 @@ import com.google.inject.Module;
 import com.google.inject.Binder;
 import org.apache.log4j.Logger;
 import org.embulk.EmbulkEmbed;
+import org.embulk.config.ConfigLoader;
+import org.embulk.config.ConfigSource;
+import org.embulk.exec.ExecutionResult;
 import org.embulk.input.RedshiftInputPlugin;
 import org.embulk.output.RedshiftOutputPlugin;
 import org.embulk.plugin.InjectedPluginSource;
@@ -28,7 +31,20 @@ public class Handler implements RequestHandler<Map<String, Object>, Object> {
         );
 
         EmbulkEmbed embulk = bootstrap.initializeCloseable();
-        return "Ya!";
+
+        String resultMessage = "resultMessage";
+
+        try {
+            ConfigLoader loader = embulk.newConfigLoader();
+            ConfigSource config = loader.fromJsonString("{\"in\":{\"type\":\"redshift\"},\"out\":{\"type\":\"redshift\"}}");
+            ExecutionResult result = embulk.run(config);
+            resultMessage = result.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMessage = e.toString();
+        }
+
+        return resultMessage;
     }
 
     static class RedshiftInputModule implements Module {
