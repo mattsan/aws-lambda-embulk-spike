@@ -34,14 +34,14 @@ public class Handler implements RequestHandler<Map<String, Object>, Object> {
     static class RedshiftInputModule implements Module {
         @Override
         public void configure(Binder binder) {
-            InjectedPluginSource.registerPluginTo(binder, InputPlugin.class, "redfshiftInput", RedshiftInputPlugin.class);
+            InjectedPluginSource.registerPluginTo(binder, InputPlugin.class, "redshift", RedshiftInputPlugin.class);
         }
     }
 
     static class RedshiftOutputModule implements Module {
         @Override
         public void configure(Binder binder) {
-            InjectedPluginSource.registerPluginTo(binder, OutputPlugin.class, "redfshiftOutput", RedshiftOutputPlugin.class);
+            InjectedPluginSource.registerPluginTo(binder, OutputPlugin.class, "redshift", RedshiftOutputPlugin.class);
         }
     }
 }
