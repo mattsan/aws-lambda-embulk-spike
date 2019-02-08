@@ -54,10 +54,10 @@ provider:
 
 # you can add packaging information here
 package:
-  artifact: build/distributions/hello.zip
+  artifact: build/distributions/etl.zip
 
 functions:
-  hello:
+  etl:
     handler: com.serverless.Handler
     timeout: 60
 
