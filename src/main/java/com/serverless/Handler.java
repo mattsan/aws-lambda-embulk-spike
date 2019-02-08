@@ -48,9 +48,7 @@ public class Handler implements RequestHandler<Map<String, Object>, Object> {
               "  fetch_rows: 1000\n" +
               "out:\n" +
               "  type: redshift\n" +
-              "  aws_auth_method: basic\n" + // basic = キーを指定する
-              "  access_key_id: アクセスキー\n" +
-              "  secret_access_key: シークレットキー\n" +
+              "  aws_auth_method: env\n" + // env = 環境変数の値を利用する
               "  host: 転送先のホスト名\n" +
               "  user: 転送先のユーザ名\n" +
               "  password: 転送先のパスワード\n" +
