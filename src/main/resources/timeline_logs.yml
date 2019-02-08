@@ -1,0 +1,21 @@
+in:
+  type: redshift
+  host: 転送元のホスト名
+  user: 転送元のユーザ名
+  password: 転送元のパスワード
+  database: 転送元のデータベース名
+  table: 転送元のテーブル名
+  select: 'id, name, age' # 転送するカラム
+  fetch_rows: 1000
+out:
+  type: redshift
+  aws_auth_method: env #  env = 環境変数の値を利用する
+  host: 転送先のホスト名
+  user: 転送先のユーザ名
+  password: 転送先のパスワード
+  database: 転送先のデータベース名
+  table: 転送先のテーブル名
+  mode: merge
+  merge_keys: "['id']"
+  s3_bucket: テンポラリファイルを格納するバケット
+  s3_key_prefix: テンポラリファイルの接頭辞

@@ -1,5 +1,9 @@
 package com.serverless;
 
+import java.net.URL;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 
@@ -31,30 +35,9 @@ public class Handler implements RequestHandler<Map<String, Object>, Object> {
         String resultMessage = "resultMessage";
 
         try {
+            String configYaml = readYaml("/timeline_logs.yml");
             ConfigLoader loader = embulk.newConfigLoader();
-            ConfigSource config = loader.fromYamlString(
-              "in:\n" +
-              "  type: redshift\n" +
-              "  host: 転送元のホスト名\n" +
-              "  user: 転送元のユーザ名\n" +
-              "  password: 転送元のパスワード\n" +
-              "  database: 転送元のデータベース名\n" +
-              "  table: 転送元のテーブル名\n" +
-              "  select: 'id, name, age'\n" + // 転送するカラム
-              "  fetch_rows: 1000\n" +
-              "out:\n" +
-              "  type: redshift\n" +
-              "  aws_auth_method: env\n" + // env = 環境変数の値を利用する
-              "  host: 転送先のホスト名\n" +
-              "  user: 転送先のユーザ名\n" +
-              "  password: 転送先のパスワード\n" +
-              "  database: 転送先のデータベース名\n" +
-              "  table: 転送先のテーブル名\n" +
-              "  mode: merge\n" +
-              "  merge_keys: ['id']\n" +
-              "  s3_bucket: テンポラリファイルを格納するバケット\n" +
-              "  s3_key_prefix: テンポラリファイルの接頭辞\n"
-            );
+            ConfigSource config = loader.fromYamlString(configYaml);
             ExecutionResult result = embulk.run(config);
             resultMessage = result.toString();
         } catch (Exception e) {
@@ -63,6 +46,21 @@ public class Handler implements RequestHandler<Map<String, Object>, Object> {
         }
 
         return resultMessage;
+    }
+
+    String readYaml(String path) throws IOException {
+        URL url = Handler.class.getResource(path);
+        BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+
+        StringBuffer buffer = new StringBuffer("");
+        String inputLine;
+        while ((inputLine = in.readLine()) != null) {
+            buffer.append(inputLine);
+            buffer.append("\n");
+        }
+        in.close();
+
+        return buffer.toString();
     }
 
     static class RedshiftInputModule implements Module {
