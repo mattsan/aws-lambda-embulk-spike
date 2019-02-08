@@ -36,7 +36,31 @@ public class Handler implements RequestHandler<Map<String, Object>, Object> {
 
         try {
             ConfigLoader loader = embulk.newConfigLoader();
-            ConfigSource config = loader.fromJsonString("{\"in\":{\"type\":\"redshift\"},\"out\":{\"type\":\"redshift\"}}");
+            ConfigSource config = loader.fromYamlString(
+              "in:\n" +
+              "  type: redshift\n" +
+              "  host: 転送元のホスト名\n" +
+              "  user: 転送元のユーザ名\n" +
+              "  password: 転送元のパスワード\n" +
+              "  database: 転送元のデータベース名\n" +
+              "  table: 転送元のテーブル名\n" +
+              "  select: 'id, name, age'\n" + // 転送するカラム
+              "  fetch_rows: 1000\n" +
+              "out:\n" +
+              "  type: redshift\n" +
+              "  aws_auth_method: basic\n" + // basic = キーを指定する
+              "  access_key_id: アクセスキー\n" +
+              "  secret_access_key: シークレットキー\n" +
+              "  host: 転送先のホスト名\n" +
+              "  user: 転送先のユーザ名\n" +
+              "  password: 転送先のパスワード\n" +
+              "  database: 転送先のデータベース名\n" +
+              "  table: 転送先のテーブル名\n" +
+              "  mode: merge\n" +
+              "  merge_keys: ['id']\n" +
+              "  s3_bucket: テンポラリファイルを格納するバケット\n" +
+              "  s3_key_prefix: テンポラリファイルの接頭辞\n"
+            );
             ExecutionResult result = embulk.run(config);
             resultMessage = result.toString();
         } catch (Exception e) {
