@@ -59,7 +59,7 @@ package:
 functions:
   etl:
     handler: com.serverless.Handler
-    timeout: 60
+    timeout: 900
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
