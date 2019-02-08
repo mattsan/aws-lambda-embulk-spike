@@ -7,7 +7,6 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.inject.Module;
 import com.google.inject.Binder;
-import org.apache.log4j.Logger;
 import org.embulk.EmbulkEmbed;
 import org.embulk.config.ConfigLoader;
 import org.embulk.config.ConfigSource;
@@ -19,9 +18,6 @@ import org.embulk.spi.InputPlugin;
 import org.embulk.spi.OutputPlugin;
 
 public class Handler implements RequestHandler<Map<String, Object>, Object> {
-
-    private static final Logger LOG = Logger.getLogger(Handler.class);
-
     @Override
     public Object handleRequest(Map<String, Object> input, Context context) {
         EmbulkEmbed.Bootstrap bootstrap = new EmbulkEmbed.Bootstrap();
