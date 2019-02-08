@@ -25,9 +25,6 @@ dependencies {
     compile (
         'com.amazonaws:aws-lambda-java-core:1.1.0',
         'com.amazonaws:aws-lambda-java-log4j:1.0.0',
-        'com.fasterxml.jackson.core:jackson-core:2.8.5',
-        'com.fasterxml.jackson.core:jackson-databind:2.8.5',
-        'com.fasterxml.jackson.core:jackson-annotations:2.8.5',
         'org.embulk:embulk-core:0.7.10',
         'org.embulk:embulk-standards:+',
         fileTree(dir: 'build/gems/gems/embulk-input-redshift-0.9.3/classpath', include: ['*.jar']),
