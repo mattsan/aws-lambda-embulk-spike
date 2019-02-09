@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.github.jruby-gradle:jruby-gradle-plugin:1.4.0'
+        //classpath 'com.github.jruby-gradle:jruby-gradle-plugin:1.4.0'
         classpath 'com.github.jruby-gradle:jruby-gradle-jar-plugin:1.1.5'
     }
 }
