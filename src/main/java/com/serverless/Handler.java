@@ -35,7 +35,7 @@ public class Handler implements RequestHandler<Map<String, Object>, Object> {
         String resultMessage = "resultMessage";
 
         try {
-            String configYaml = readYaml("/timeline_logs.yml");
+            String configYaml = readYaml("/config/timeline_logs.yml");
             ConfigLoader loader = embulk.newConfigLoader();
             ConfigSource config = loader.fromYamlString(configYaml);
             ExecutionResult result = embulk.run(config);
